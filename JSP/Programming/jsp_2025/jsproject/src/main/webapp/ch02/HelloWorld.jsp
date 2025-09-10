@@ -14,4 +14,4 @@
 <p>현재 날짜와 시간은 : <%=new java.util.Date() %></p>
 </div>
 </body>
-</html>
+</html> 
