@@ -1,0 +1,67 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="jsproject.ch07.*, java.util.*" %>
+
+<%-- application scope에 저장된 AddrManager 객체를 가져옵니다. --%>
+<jsp:useBean id="am" class="jsproject.ch07.AddrManager" scope="application"/>
+
+<%
+    // POST 방식으로 전달된 한글 검색어가 깨지지 않도록 인코딩을 설정합니다.
+    request.setCharacterEncoding("UTF-8");
+
+    // "searchName" 파라미터로 전달된 검색어를 가져옵니다.
+    String searchName = request.getParameter("searchName");
+
+    // 검색 결과가 있는지 확인하기 위한 플래그 변수
+    boolean found = false;
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>주소록 검색 결과</title>
+</head>
+<body>
+    <div align="center">
+        <h2>'<%= searchName %>'</h2>
+        <p>입력하신 이름으로 검색한 결과입니다.</p>
+        <hr>
+        <table border="1" style="width:500px; text-align:center">
+            <tr>
+                <th>이름</th><th>전화번호</th><th>이메일</th><th>성별</th>
+            </tr>
+            <%
+                // 검색어가 비어있지 않은 경우에만 검색 로직을 수행합니다.
+                if (searchName != null && !searchName.trim().isEmpty()) {
+                    // 전체 주소록 목록을 순회하며 검색어와 일치하는 사용자를 찾습니다.
+                    for (AddrBean ab : am.getAddrList()) {
+                        if (ab.getUsername().contains(searchName)) {
+                            found = true; // 결과를 찾았으므로 플래그를 true로 변경
+            %>
+            <tr>
+                <td><%= ab.getUsername() %></td>
+                <td><%= ab.getTel() %></td>
+                <td><%= ab.getEmail() %></td>
+                <td><%= ab.getGender() %></td>
+            </tr>
+            <%
+                        } // if 문 종료
+                    } // for 문 종료
+                } // 바깥 if 문 종료
+            %>
+        </table>
+
+        <%
+            // for문을 모두 순회한 후에도 found가 false이면 검색 결과가 없는 것입니다.
+            if (!found) {
+        %>
+            <p style="margin-top:20px;"><b>'<%= searchName %>'과(와) 일치하는 주소를 찾을 수 없습니다.</b></p>
+        <%
+            }
+        %>
+        
+        <br>
+        <a href="addrList.jsp">[전체 목록으로 돌아가기]</a>
+    </div>
+</body>
+</html>

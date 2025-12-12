@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>간단한 계산기</title>
+</head>
+<body>
+<div align="center">
+<H3>간단한 계산기</H3>
+ <form name="form1" action="/jsproject/CalcServlet1" method="post">
+        <input type="text" name="num1" width="200" size="5"> <!-- TextBox 역할 -->
+        
+        <select name="operator"> <!-- DropDownList 역할 -->
+            <option selected>+</option>
+            <option>-</option>
+            <option>*</option>
+            <option>/</option>
+        </select>
+        
+        <input type="text" name="num2" width="200" size="5"> <!-- TextBox 역할 -->
+        <input type="submit" name="B1" value="계산"> <!-- Button 역할 -->
+        <input type="reset" name="B2" value="다시 입력"> <!-- Button 역할 -->
+    </form>
+    </div>
+    
+</body>
+</html>
